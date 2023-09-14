@@ -1,0 +1,17 @@
+[control]
+mgmt01
+
+[proxy] 
+lb01
+
+[webserver] 
+web01
+web02
+
+[database] 
+db01
+
+[webstack:children] 
+proxy 
+webserver
+database

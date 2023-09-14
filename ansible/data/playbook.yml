@@ -1,0 +1,29 @@
+- hosts: proxy
+  become: yes
+
+  vars:
+    welcome_msg: "Welcome to Ansible"
+
+  tasks:
+    - name: Ensure nginx is at the latest version
+      apt:
+        name: nginx
+        state: latest
+
+    - name: Create index.html file
+      template:
+        src: templates/index.html.j2
+        dest: /var/www/html/index.html
+      notify:
+        - restart nginx
+
+    - name: Ensure nginx is running
+      service:
+        name: nginx
+        state: started
+
+  handlers:
+    - name: restart nginx
+      service:
+        name: nginx
+        state: restarted

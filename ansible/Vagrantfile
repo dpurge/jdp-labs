@@ -1,0 +1,82 @@
+Vagrant.configure("2") do |config|
+
+  servers=[
+    {
+      :hostname => "lb01",
+      :box => "generic/ubuntu2010",
+      :ip => "192.168.200.101",
+      :ssh_port => '2201',
+      :memory => 512,
+      :cpus => 1
+    },
+    {
+      :hostname => "web01",
+      :box => "generic/ubuntu2010",
+      :ip => "192.168.200.111",
+      :ssh_port => '2211',
+      :memory => 512,
+      :cpus => 1
+    },
+    {
+      :hostname => "web02",
+      :box => "generic/ubuntu2010",
+      :ip => "192.168.200.112",
+      :ssh_port => '2212',
+      :memory => 512,
+      :cpus => 1
+    },
+    {
+      :hostname => "db01",
+      :box => "generic/ubuntu2010",
+      :ip => "192.168.200.121",
+      :ssh_port => '2221',
+      :memory => 512,
+      :cpus => 1
+    },
+    {
+      :hostname => "mgmt01",
+      :box => "generic/ubuntu2010",
+      :ip => "192.168.200.131",
+      :ssh_port => '2231',
+      :memory => 512,
+      :cpus => 1
+    }
+  ]
+  gateway="192.168.200.1"
+
+  servers.each do |srv|
+    config.vm.define srv[:hostname] do |node|
+      node.vm.box = srv[:box]
+      node.vm.hostname = srv[:hostname]
+
+      node.vm.provider :hyperv
+      node.vm.network :public_network, auto_config: false, bridge: "NATSwitch"
+      # Vagrant's hyperv provider is barely usable :(
+      # They are 'actively working' on networking in Hyper-V for many YEARS now...
+      # node.vm.network :forwarded_port, guest: 22, host: srv[:ssh_port], id: "ssh"
+      node.vm.synced_folder ".", "/vagrant", disabled: true
+      case srv[:hostname]
+      # when "lb01"
+      #   node.vm.network :forwarded_port, guest: 80, host: 8080, id: "http"
+      when "mgmt01"
+        # node.vm.synced_folder "./data", "/data", type: "smb", mount_options: ['vers=3.0']
+        node.vm.provision :file, source: './data', destination: "~/data"
+      end
+
+      node.vm.provision "shell", path: "./scripts/configure-static-ip.sh", :args => "#{srv[:ip]} #{gateway}"
+      servers.each do |host|
+        node.vm.provision "shell", path: "./scripts/add-hosts-entry.sh", :args => "#{host[:ip]} #{host[:hostname]}"
+      end
+      node.vm.provision :reload
+
+      node.vm.provider :hyperv do |h|
+        h.vmname = srv[:hostname]
+        h.enable_virtualization_extensions = true
+        h.linked_clone = true
+        h.maxmemory = 2048
+        h.memory = srv[:memory]
+        h.cpus = srv[:cpus]
+      end
+    end
+  end
+end
