@@ -3,3 +3,5 @@ jupyterlab
 pandas
 pyyaml
 delta-spark
+matplotlib
+toml
