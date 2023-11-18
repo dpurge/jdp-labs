@@ -1,3 +1,4 @@
+__pycache__/
 .vagrant/
 .ipynb_checkpoints/
 packer_cache/
