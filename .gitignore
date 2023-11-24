@@ -1,5 +1,10 @@
+.DS_Store
 __pycache__/
 .vagrant/
 .ipynb_checkpoints/
 packer_cache/
 spark/notebook/data/vocabulary/
+
+*.tfstate
+*.tfstate.backup
+.terraform/
