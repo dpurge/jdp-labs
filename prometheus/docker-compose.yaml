@@ -1,0 +1,34 @@
+version: '2.2'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.19.1
+    volumes:
+      - ./env:/etc/prometheus/
+      # does not work in Rancher Desktop
+      #- ./storage:/prometheus/
+      - prometheus_data:/prometheus/
+    restart: always
+    ports:
+      - 9090:9090
+
+  metrics-exporter:
+    build:
+      context: ./metrics_exporter
+    restart: always
+    ports:
+      - 9256:9256
+
+  service-discovery:
+    build:
+      context: ./service_discovery
+    restart: always
+    environment:
+      - INPUT_FILE=/io/metrics
+      - OUTPUT_FILE=/io/service_discovery.json
+      - EXPORTER_ADDRESS=metrics-exporter:9256
+      - UPDATE_INTERVAL=30
+    volumes:
+      - ./env:/io
+volumes:
+  prometheus_data:

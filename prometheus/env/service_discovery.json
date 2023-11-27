@@ -1,0 +1,68 @@
+[
+  {
+    "targets": [
+      "metrics-exporter:9256"
+    ],
+    "labels": {
+      "project": "prod",
+      "__param_oncall": "operations@example.com",
+      "__metrics_path__": "/foometric",
+      "job": "foometric"
+    }
+  },
+  {
+    "targets": [
+      "metrics-exporter:9256"
+    ],
+    "labels": {
+      "project": "prod",
+      "__param_oncall": "operations@example.com",
+      "__metrics_path__": "/barmetric",
+      "job": "barmetric"
+    }
+  },
+  {
+    "targets": [
+      "metrics-exporter:9256"
+    ],
+    "labels": {
+      "project": "stage",
+      "__param_oncall": "devops@example.com",
+      "__metrics_path__": "/foometric",
+      "job": "foometric"
+    }
+  },
+  {
+    "targets": [
+      "metrics-exporter:9256"
+    ],
+    "labels": {
+      "project": "stage",
+      "__param_oncall": "devops@example.com",
+      "__metrics_path__": "/barmetric",
+      "job": "barmetric"
+    }
+  },
+  {
+    "targets": [
+      "metrics-exporter:9256"
+    ],
+    "labels": {
+      "project": "dev",
+      "__param_oncall": "developer@example.com",
+      "__metrics_path__": "/foometric",
+      "job": "foometric"
+    }
+  },
+  {
+    "targets": [
+      "metrics-exporter:9256"
+    ],
+    "labels": {
+      "project": "dev",
+      "__param_oncall": "developer@example.com",
+      "__metrics_path__": "/barmetric",
+      "job": "barmetric"
+    }
+  }
+]

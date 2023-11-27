@@ -1,0 +1,3 @@
+project:prod,__param_oncall:operations@example.com
+project:stage,__param_oncall:devops@example.com
+project:dev,__param_oncall:developer@example.com
