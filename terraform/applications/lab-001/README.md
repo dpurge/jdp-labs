@@ -2,4 +2,6 @@
 
 ```sh
 terraform init
+terraform fmt
+terraform plan
 ```

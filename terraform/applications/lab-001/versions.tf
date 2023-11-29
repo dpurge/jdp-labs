@@ -1,26 +1,26 @@
 terraform {
   required_providers {
-  
+
     kubernetes = {
       source  = "hashicorp/kubernetes"
       version = ">= 2.23"
     }
-  
+
     aws = {
-	  source  = "hashicorp/aws"
-	  version = "~> 5.26"
-	}
-	
-	azurerm = {
+      source  = "hashicorp/aws"
+      version = "~> 5.26"
+    }
+
+    azurerm = {
       source  = "hashicorp/azurerm"
       version = "=3.82.0"
-	}
-	
-	google = {
+    }
+
+    google = {
       source  = "hashicorp/google"
       version = "=5.7.0"
-	}
-	
+    }
+
   }
 }
 
@@ -33,7 +33,7 @@ terraform {
 #}
 
 provider "aws" {
-  region = "us-east-1"
+  region = "eu-central-1"
 }
 
 #provider "azurerm" {
