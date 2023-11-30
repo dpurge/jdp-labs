@@ -9,6 +9,7 @@ spark/notebook/data/vocabulary/
 *.tfstate.backup
 .terraform/
 
+.env
+
 # Airflow
-airflow/.env
-airflow/logs
+airflow/logs/

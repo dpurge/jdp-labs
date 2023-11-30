@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  init:
+    image: docker.elastic.co/elasticsearch/elasticsearch:${ELK_VERSION}
+    volumes:
+      - ./certs:/usr/share/elasticsearch/config/certs
+    user: '0'
+    entrypoint: /bin/sh
+    command: >
+      echo $PATH
+      if [ ! -f config/certs/ca.zip ]; then
+        echo "Creating CA";
+      fi;
+    # healthcheck:
+    #   test: ['CMD-SHELL', '']
+    #   interval: 10s
+    #   timeout: 5s
+    #   retries: 10
+
+volumes:
+  certs:
