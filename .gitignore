@@ -11,3 +11,4 @@ spark/notebook/data/vocabulary/
 
 # Airflow
 airflow/.env
+airflow/logs
