@@ -1,7 +1,8 @@
 resource "aws_s3_bucket" "tf_state" {
-  bucket = "dpurge-tfstate-lab001"
+  bucket        = "dpurge-tfstate-lab001"
+  force_destroy = true
   lifecycle {
-    prevent_destroy = true
+    prevent_destroy = false
   }
 }
 
@@ -38,7 +39,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "tf_state" {
 
 resource "aws_dynamodb_table" "tfstate_locking" {
   hash_key = "LockID"
-  name = "dpurge-tfstate-locking-lab001"
+  name     = "dpurge-tfstate-locking-lab001"
   attribute {
     name = "LockID"
     type = "S"
