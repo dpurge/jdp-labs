@@ -1,6 +1,5 @@
 package com.example;
 
-
 class MessageModel {
    private String message;
 
