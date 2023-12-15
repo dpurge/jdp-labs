@@ -1,0 +1,22 @@
+version: "3.8"
+
+services:
+  codellama:
+    build:
+      context: ./codellama
+    ports:
+    - "8000:8000"
+    deploy:
+      resources:
+        limits:
+          cpus: '0.9'
+          memory: 16G
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    volumes:
+    - ./models:/root/.cache/huggingface
+# volumes:
+#   llm_models:
