@@ -1,0 +1,6 @@
+bitsandbytes
+datasets
+peft
+transformers
+--index-url https://download.pytorch.org/whl/cu121
+torch
