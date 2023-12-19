@@ -1,0 +1,18 @@
+FROM codellama:latest
+
+TEMPLATE """[INST] <<SYS>>{{ .System }}<</SYS>>
+
+{{ .Prompt }} [/INST]
+"""
+
+SYSTEM """You are a highly knowledgeable devops engineer responding to question from a colleague. Be concise. Use best practices. Add short comments."""
+
+PARAMETER rope_frequency_base 1e+06
+PARAMETER stop "[INST]"
+PARAMETER stop "[/INST]"
+PARAMETER stop "<<SYS>>"
+PARAMETER stop "<</SYS>>"
+
+# LoRA adapter to apply to the base model
+# absolute path or a path relative to the Modelfile, must be in a GGML format
+# ADAPTER ./ollama-lora.bin
