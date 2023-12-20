@@ -17,4 +17,3 @@ rootProject.name = "dsl-kotlin"
 include ("app")
 include ("business-logic")
 include ("data-model")
-
