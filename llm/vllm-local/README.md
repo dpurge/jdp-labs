@@ -1,6 +1,6 @@
 # Local testing of vLLM
 
-This is running in Ubintu WSL2 under Windows, because vLLM failed to install under Windows due to some CUDA error.
+This is running in Ubintu WSL2 under Windows.
 
 My python:
 
@@ -52,7 +52,7 @@ pip install vllm
 Start vLLM:
 
 ```sh
-python -m vllm.entrypoints.openai.api_server --model TheBloke/Llama-2-7B-chat-AWQ --dtype half --served-model-name codellama-7b
+python -m vllm.entrypoints.openai.api_server --model TheBloke/Llama-2-7B-AWQ --dtype half --served-model-name llama2-7b --trust-remote-code
 (...snip...)
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
 ```
@@ -61,11 +61,11 @@ Configure `Continue` extension to talk to the model:
 
 ```json
 {
-    "title": "CodeLlama-7b-vllm",
+    "title": "Llama2-7b-vllm",
     "provider": "openai-aiohttp",
-    "model": "codellama-7b",
+    "model": "llama2-7b",
     "api_base": "http://localhost:8000"
 }
 ```
 
-And it works :)
+It starts, but hangs after a few generated tokens.
