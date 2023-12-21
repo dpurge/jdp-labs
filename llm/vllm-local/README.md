@@ -42,7 +42,7 @@ Thu Dec 21 19:58:27 2023
 +---------------------------------------------------------------------------------------+
 ```
 
-Install torch with GPU support, bitsandbytes for windows and vLLM:
+Install torch and vLLM:
 
 ```sh
 pip install torch --index-url https://download.pytorch.org/whl/cu121
