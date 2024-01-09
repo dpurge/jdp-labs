@@ -10,6 +10,7 @@ dependencyResolutionManagement {
     repositories {
         mavenCentral()
     }
+    includeBuild("gradle/platform")
 }
 
 rootProject.name = "dsl-kotlin"
