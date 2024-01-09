@@ -19,4 +19,5 @@ Build:
 ./gradlew :app:count --console=plain
 
 ./gradlew :app:dependencies --configuration runtimeClasspath
+./gradlew :busines-logic:check
 ```

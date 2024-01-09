@@ -12,4 +12,10 @@ dependencies {
     
     implementation(libs.commons.lang)
     implementation(libs.slf4j.api)
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+
+    // integrationTestImplementation("org.junit.jupiter:junit-jupiter-api")
+    // integrationTestRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
 }

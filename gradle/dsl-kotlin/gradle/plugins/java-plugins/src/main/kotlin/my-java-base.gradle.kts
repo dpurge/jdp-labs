@@ -28,3 +28,35 @@ tasks.withType<JavaCompile>().configureEach {
 dependencies.components {
     withModule<Slf4jSimpleRule>("org.slf4j:slf4j-simple")
 }
+
+// sourceSets.main {
+//     java.setSrcDirs(listOf(layout.projectDirectory.dir("sources")))
+// }
+
+tasks.test {
+    useJUnitPlatform {
+        excludeTags("slow")
+    }
+    maxParallelForks = 2
+    maxHeapSize = "1g"
+}
+
+tasks.register<Test>("testSlow") {
+    testClassesDirs = sourceSets.test.get().output.classesDirs
+    classpath = sourceSets.test.get().runtimeClasspath
+
+    useJUnitPlatform {
+        includeTags("slow")
+    }
+}
+
+tasks.register<Test>("integrationTest") {
+    testClassesDirs = sourceSets["integrationTest"].output.classesDirs
+    classpath = sourceSets["integrationTest"].runtimeClasspath
+
+    useJUnitPlatform()
+}
+
+tasks.check {
+    dependsOn("testSlow")
+}
