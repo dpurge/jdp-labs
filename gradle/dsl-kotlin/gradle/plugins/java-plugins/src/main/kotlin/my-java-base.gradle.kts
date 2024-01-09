@@ -1,3 +1,5 @@
+// import com.example.gradle.Slf4jSimpleRule
+
 plugins {
     id("java")
 }
@@ -23,3 +25,6 @@ tasks.withType<JavaCompile>().configureEach {
     options.compilerArgs.addAll(listOf("-Xlint:unchecked", "-Xlint:deprecation"))
 }
 
+dependencies.components {
+    withModule<Slf4jSimpleRule>("org.slf4j:slf4j-simple")
+}

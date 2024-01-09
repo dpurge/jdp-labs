@@ -14,4 +14,6 @@ dependencies.constraints {
     api("org.apache.commons:commons-lang3:3.12.0")
     api("org.slf4j:slf4j-api:2.0.5")
     api("org.slf4j:slf4j-simple:2.0.5")
+
+    api("com.google.guava:guava:20.0-jre")
 }

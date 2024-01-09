@@ -17,4 +17,6 @@ Build:
 ./gradlew bundle # custom task
 ./gradlew :app:bundle --console=plain
 ./gradlew :app:count --console=plain
+
+./gradlew :app:dependencies --configuration runtimeClasspath
 ```
