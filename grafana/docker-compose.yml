@@ -1,0 +1,62 @@
+version: '3.8'
+
+networks:
+
+  grafana:
+    external: false
+
+volumes:
+
+  prometheus:
+  grafana:
+
+services:
+
+  exporter:
+    build:
+      context: ./exporter
+    container_name: exporter
+    restart: unless-stopped
+    networks:
+      - grafana
+    ports:
+      - 9100:9100
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    restart: unless-stopped
+    depends_on:
+      - exporter
+    networks:
+      - grafana
+    ports:
+      - 9090:9090
+    volumes:
+      - type: bind
+        source: ./prometheus/prometheus.yml
+        target: /etc/prometheus/prometheus.yml
+      - type: volume
+        source: prometheus
+        target: /prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/etc/prometheus/console_libraries'
+      - '--web.console.templates=/etc/prometheus/consoles'
+      - '--web.enable-lifecycle'
+
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+    networks:
+      - grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - type: volume
+        source: grafana
+        target: /var/lib/grafana
