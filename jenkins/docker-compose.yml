@@ -1,0 +1,95 @@
+version: '3.8'
+
+networks:
+  jenkins:
+    external: false
+
+volumes:
+  postgres:
+  pgadmin:
+  gitea:
+  jenkins:
+
+services:
+
+  postgres:
+    image: postgres
+    container_name: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    networks:
+      - jenkins
+    ports:
+      - 5432:5432
+    volumes:
+      - type: bind
+        source: ./postgres/init.sql
+        target: /docker-entrypoint-initdb.d/init.sql
+      - type: volume
+        source: postgres
+        target: /var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: pgadmin
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=pgadmin@example.com
+      - PGADMIN_DEFAULT_PASSWORD=pgadmin
+    networks:
+      - jenkins
+    ports:
+      - 15433:80
+    volumes:
+      - type: volume
+        source: pgadmin
+        target: /var/lib/pgadmin
+    depends_on:
+      - postgres
+
+  gitea:
+    image: gitea/gitea
+    container_name: gitea
+    restart: always
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=postgres
+      - GITEA__database__HOST=postgres:5432
+      - GITEA__database__NAME=gitea
+      - GITEA__database__USER=gitea
+      - GITEA__database__PASSWD=gitea
+    networks:
+      - jenkins
+    ports:
+      - 3000:3000
+      - 222:22
+    volumes:
+      - type: volume
+        source: gitea
+        target: /data
+    depends_on:
+      - postgres
+
+  jenkins:
+    build:
+      context: ./jenkins
+    container_name: jenkins
+    privileged: true
+    user: root
+    restart: always
+    environment:
+      - DOCKER_HOST=unix:///var/run/docker.sock
+    networks:
+      - jenkins
+    ports:
+      - 8080:8080
+      - 50000:50000
+    volumes:
+      - type: bind
+        source: /var/run/docker.sock
+        target: /var/run/docker.sock
+      - type: volume
+        source: jenkins
+        target: /var/jenkins_home
