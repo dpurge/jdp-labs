@@ -1,0 +1,18 @@
+apiVersion: 1
+
+providers:
+
+  - name: 'dpurge-lab1-panel'
+    orgId: 1
+    type: file
+    options:
+      path: /etc/grafana/provisioning/dashboards/dpurge-lab1-panel.json
+
+  # - name: 'Prometheus'
+  #   orgId: 1
+  #   folder: ''
+  #   type: file
+  #   disableDeletion: false
+  #   editable: true
+  #   options:
+  #     path: /etc/grafana/provisioning/dashboards/PrometheusMonitoring.json

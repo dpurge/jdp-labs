@@ -1,0 +1,56 @@
+version: '3'
+
+tasks:
+
+  new-plugin:
+    dir: "{{.TASKFILE_DIR}}/plugins"
+    cmds:
+      - npx @grafana/create-plugin@latest
+    silent: true
+
+  build-plugins:
+    dir: "{{.TASKFILE_DIR}}/plugins"
+    cmds:
+      - |
+        set -e
+
+        echo
+        echo "#==============================#"
+        echo "#        Build plugins         #"
+        echo "#==============================#"
+
+        for plugin in */
+        do
+          echo
+          echo "========== ${plugin} =========="
+          pushd ${plugin}
+          # npm install
+          npm run build
+          # npm run test
+          popd
+        done
+    silent: true
+
+  build-dashboards:
+    deps: [build-plugins]
+    dir: "{{.TASKFILE_DIR}}/dashboards"
+    cmds:
+      - |
+        set -e
+
+        echo
+        echo "#==============================#"
+        echo "#       Build dashboards       #"
+        echo "#==============================#"
+
+        for dashboard in *.jsonnet
+        do
+          echo
+          echo "========== ${dashboard} =========="
+          jsonnet -J libsonnet $dashboard > "{{.TASKFILE_DIR}}/provisioning/dashboards/${dashboard%net}"
+        done
+    silent: true
+
+  build:
+    deps: [build-dashboards]
+    silent: true

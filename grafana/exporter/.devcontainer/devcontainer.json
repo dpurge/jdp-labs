@@ -1,0 +1,18 @@
+{
+    "name": "grafana",
+    "dockerComposeFile": "../../docker-compose.yml",
+    "service": "exporter",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "terminal.integrated.shell.linux": "/bin/bash"
+            },
+            "extensions": [
+                "dbaeumer.vscode-eslint"
+            ]
+        }
+    },
+    "workspaceFolder": "/app/",
+    "remoteUser": "root",
+    "shutdownAction": "stopCompose"
+}

@@ -1,6 +1,0 @@
-apiVersion: 1
-
-# apps:
-#   - type: dpurge-foo-panel
-#     org_name: Main Org.
-#     disabled: false
