@@ -1,3 +1,6 @@
+# Custom
+llm/rag-langchain/vectorstore/
+
 # Python
 .DS_Store
 __pycache__/
